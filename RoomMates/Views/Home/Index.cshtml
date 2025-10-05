@@ -1,0 +1,91 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold text-primary">Welcome Room Mates</h1>
+        <p class="lead text-muted">Manage users, shops, and billing easily</p>
+    </div>
+
+    <div class="row justify-content-center g-4">
+        <!-- Add User Card -->
+        <div class="col-12 col-sm-6 col-md-3">
+            <div class="card shadow-lg border-0 rounded-4 text-center h-100 card-hover">
+                <div class="card-body p-4 d-flex flex-column">
+                    <div class="icon-circle bg-primary mb-3">
+                        <i class="bi bi-person-plus fs-1 text-white"></i>
+                    </div>
+                    <h5 class="fw-bold">Add User</h5>
+                    <p class="text-muted flex-grow-1">Create and manage new user accounts</p>
+                    <a href="/AddUser/User" class="btn btn-primary rounded-3 w-100 mt-auto">Add User</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sathish Shop Card -->
+        <div class="col-12 col-sm-6 col-md-3">
+            <div class="card shadow-lg border-0 rounded-4 text-center h-100 card-hover">
+                <div class="card-body p-4 d-flex flex-column">
+                    <div class="icon-circle bg-success mb-3">
+                        <i class="bi bi-shop fs-1 text-white"></i>
+                    </div>
+                    <h5 class="fw-bold">Sathish Shop</h5>
+                    <p class="text-muted flex-grow-1">Explore and manage shop details</p>
+                    <a href="/AddSathishShop/SathishShop" class="btn btn-success rounded-3 w-100 mt-auto">Add Item</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- User Own Shop Card -->
+        <div class="col-12 col-sm-6 col-md-3">
+            <div class="card shadow-lg border-0 rounded-4 text-center h-100 card-hover">
+                <div class="card-body p-4 d-flex flex-column">
+                    <div class="icon-circle bg-warning mb-3">
+                        <i class="bi bi-bag-check fs-1 text-dark"></i>
+                    </div>
+                    <h5 class="fw-bold">User Own Shopping</h5>
+                    <p class="text-muted flex-grow-1">Manage your own shop and products</p>
+                    <a href="/AddUserOwnShop/UserShop" class="btn btn-warning text-dark rounded-3 w-100 mt-auto">Add User Item</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bill Card -->
+        <div class="col-12 col-sm-6 col-md-3">
+            <div class="card shadow-lg border-0 rounded-4 text-center h-100 card-hover">
+                <div class="card-body p-4 d-flex flex-column">
+                    <div class="icon-circle bg-danger mb-3">
+                        <i class="bi bi-receipt fs-1 text-white"></i>
+                    </div>
+                    <h5 class="fw-bold">Bill</h5>
+                    <p class="text-muted flex-grow-1">Generate and manage billing records</p>
+                    <a href="/AddBill/Bill" class="btn btn-danger rounded-3 w-100 mt-auto">Open</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Circle icons */
+    .icon-circle {
+        width: 80px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        margin: 0 auto;
+    }
+
+    /* Hover effect */
+    .card-hover {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        }
+</style>
