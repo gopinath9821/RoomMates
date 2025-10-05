@@ -19,13 +19,9 @@ namespace RoomMates.Controllers
         [HttpGet]
         public IActionResult User()
         {
-            var model = new UserPageViewModel
-            {
-                User = new User(),
-                Users = _context.UserProfile.ToList() // fetch all users for grid
-            };
+           
 
-            return View(model);
+            return View();
         }
 
 
