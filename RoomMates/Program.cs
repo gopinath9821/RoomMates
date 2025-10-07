@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RoomMates.DAL;
 using RoomMates.DBContext;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,7 @@ builder.Services.AddDbContext<ConnetionDBContext>(options =>
 // Add session and HttpContextAccessor
 builder.Services.AddSession();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<DataAccess>();
 
 // ------------------------
 // 2️⃣ Build the app

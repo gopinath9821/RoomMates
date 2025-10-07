@@ -24,7 +24,7 @@ namespace RoomMates.Controllers
         // POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UserShop(UserShop model)
+        public async Task<IActionResult> Save(UserShop model)
         {
             model.UserID = HttpContext.Session.GetInt32("UserID") ?? 0;
             _context.OwnUserShop.Add(model);

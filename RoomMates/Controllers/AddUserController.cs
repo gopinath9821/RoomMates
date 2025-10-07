@@ -27,7 +27,7 @@ namespace RoomMates.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> User(User model, IFormFile PhotoFile)
+        public async Task<IActionResult> Save(User model, IFormFile PhotoFile)
         {
             if (ModelState.IsValid)
             {
