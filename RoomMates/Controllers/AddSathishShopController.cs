@@ -18,35 +18,63 @@ namespace RoomMates.Controllers
             _context = context;
         }
 
-        // GET
+
 
         [HttpGet]
-
         public async Task<IActionResult> SathishShop()
         {
             int userID = HttpContext.Session?.GetInt32("UserID") ?? 1000;
+            var UserID = new SqlParameter("@UserId", userID);
+            var ActionType = new SqlParameter("@ActionType", 2);
 
-            var param = new SqlParameter("@UserId", userID);
-
-            // Execute stored procedure and map to SathishShop model
+            // Get all shops for this user
             var shops = await _context.SathishShop
-                .FromSqlRaw("EXEC GetUserById @UserId", param)
+                .FromSqlRaw("EXEC GetAllDetails @UserId,@ActionType", UserID, ActionType)
                 .ToListAsync();
 
-            return View(shops);
+            ViewBag.ShopList = shops; // pass list directly
+
+            return View(new SathishShop()); // pass empty entity for form
         }
-        //// POST
+        // ---------- POST ----------
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Save(SathishShop model)
         {
-            model.UserID = HttpContext.Session.GetInt32("UserID") ?? 1000;
-            _context.SathishShop.Add(model);
-            await _context.SaveChangesAsync();
+            if (ModelState.IsValid)
+            {
+                int userID = HttpContext.Session?.GetInt32("UserID") ?? 1000;
+                string Name = HttpContext.Session?.GetString("Name") ?? "";
 
-            TempData["SuccessMessage"] = "Shop item saved successfully!";
-            return RedirectToAction("SathishShop");
+                var shop = new SathishShop
+                {
+                    UserID = userID,
+                    Date = model.Date,
+                    Name = Name,
+                    ProductName = model.ProductName,
+                    Price = model.Price
+                };
 
+                _context.SathishShop.Add(shop);
+                await _context.SaveChangesAsync();
+
+                TempData["SuccessMessage"] = "Shop item saved successfully!";
+
+                // Redirect to GET action to avoid "view not found" and reload data
+                return RedirectToAction("SathishShop");
+            }
+
+            // If validation fails, reload data for grid
+            int user = HttpContext.Session?.GetInt32("UserID") ?? 1000;
+            var param = new SqlParameter("@UserId", user);
+            var updatedList = await _context.SathishShop
+                .FromSqlRaw("EXEC GetUserById @UserId", param)
+                .ToListAsync();
+
+           
+
+            return View("SathishShop", updatedList); // <-- explicitly use "SathishShop" view
         }
+
     }
 }

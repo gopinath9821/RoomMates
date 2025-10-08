@@ -1,16 +1,21 @@
-﻿@{
+﻿ 
+@{
     ViewData["Title"] = "Home Page";
-}
 
+    var userID = Context.Session.GetInt32("UserID") ?? 0;
+
+
+}
+ 
 <div class="container py-5">
     <div class="text-center mb-5">
-        <h1 class="display-4 fw-bold text-primary">Welcome Room Mates</h1>
+        <h1 class="display-4 fw-bold text-primary">Home Management</h1>
         <p class="lead text-muted">Manage users, shops, and billing easily</p>
     </div>
 
     <div class="row justify-content-center g-4">
         <!-- Add User Card -->
-        <div class="col-12 col-sm-6 col-md-3">
+        <div id="User" class="col-12 col-sm-6 col-md-3">
             <div class="card shadow-lg border-0 rounded-4 text-center h-100 card-hover">
                 <div class="card-body p-4 d-flex flex-column">
                     <div class="icon-circle bg-primary mb-3">
@@ -32,7 +37,7 @@
                     </div>
                     <h5 class="fw-bold">Sathish Shop</h5>
                     <p class="text-muted flex-grow-1">Explore and manage shop details</p>
-                    <a href="/AddSathishShop/SathishShop" class="btn btn-success rounded-3 w-100 mt-auto">Add Item</a>
+                    <a href="/AddSathishShop/SathishShop" class="btn btn-success rounded-3 w-100 mt-auto">Add Product</a>
                 </div>
             </div>
         </div>
@@ -46,13 +51,13 @@
                     </div>
                     <h5 class="fw-bold">User Own Shopping</h5>
                     <p class="text-muted flex-grow-1">Manage your own shop and products</p>
-                    <a href="/AddUserOwnShop/UserShop" class="btn btn-warning text-dark rounded-3 w-100 mt-auto">Add User Item</a>
+                    <a href="/AddUserOwnShop/UserShop" class="btn btn-warning text-dark rounded-3 w-100 mt-auto">Add User Product</a>
                 </div>
             </div>
         </div>
 
         <!-- Bill Card -->
-        <div class="col-12 col-sm-6 col-md-3">
+        <div id="Bill" class="col-12 col-sm-6 col-md-3">
             <div class="card shadow-lg border-0 rounded-4 text-center h-100 card-hover">
                 <div class="card-body p-4 d-flex flex-column">
                     <div class="icon-circle bg-danger mb-3">
@@ -101,7 +106,7 @@
         width: 80px;
         height: 80px;
         display: flex;
-        align-items: center;
+        align-Products: center;
         justify-content: center;
         border-radius: 50%;
         margin: 0 auto;
@@ -117,3 +122,18 @@
             box-shadow: 0 12px 30px rgba(0,0,0,0.15);
         }
 </style>
+<script>
+    // Pass the server-side session value to JS
+    var userID = @userID;
+
+    var Bill = document.getElementById('Bill');
+    var User = document.getElementById('User');
+ 
+    if (userID === 1000) {
+        Bill.style.display = 'block';
+        User.style.display = 'block';
+    } else {
+        User.style.display = 'none';
+        Bill.style.display = 'none';
+    }
+</script>

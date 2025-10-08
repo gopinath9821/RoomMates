@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace RoomMates.Models.DBModel
 {
@@ -9,32 +10,42 @@ namespace RoomMates.Models.DBModel
 
         [Required(ErrorMessage = "Date is required")]
         [DataType(DataType.Date)]
+        [DisplayName("Bill Date")]
+
         [Display(Name = "Bill Date")]
         public DateTime Date { get; set; }
 
         [Required(ErrorMessage = "Room Rent is required")]
         [Range(0, double.MaxValue, ErrorMessage = "Enter a valid amount")]
         [Display(Name = "Room Rent")]
+        [DisplayName("Room Rent")]
+
         public decimal RoomRent { get; set; }
 
         [Required(ErrorMessage = "EB Bill is required")]
         [Range(0, double.MaxValue, ErrorMessage = "Enter a valid amount")]
         [Display(Name = "EB Bill")]
+        [DisplayName  ("EB Bill")]
+
         public decimal EBBill { get; set; }
 
         [Required(ErrorMessage = "Water Bill is required")]
         [Range(0, double.MaxValue, ErrorMessage = "Enter a valid amount")]
         [Display(Name = "Water Bill")]
+        [DisplayName("Water Bill")]
+
         public decimal WaterBill { get; set; }
 
         [Required(ErrorMessage = "Akka Bill is required")]
         [Range(0, double.MaxValue, ErrorMessage = "Enter a valid amount")]
         [Display(Name = "Akka Bill")]
+        [DisplayName("Akka Bill")]
         public decimal AkkaBill { get; set; }
 
         [Required(ErrorMessage = "WiFi Bill is required")]
         [Range(0, double.MaxValue, ErrorMessage = "Enter a valid amount")]
-        [Display(Name = "WiFi Net")]
-        public decimal WifiNet { get; set; }
+        [Display(Name = "WiFi NetWork")]
+        [DisplayName("WiFi NetWork")]
+        public decimal WifiNetwork { get; set; }
     }
 }

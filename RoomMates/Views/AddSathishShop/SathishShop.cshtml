@@ -1,51 +1,184 @@
 ﻿@model RoomMates.Models.DBModel.SathishShop
 @{
-    ViewData["Title"] = "Add Shop Item";
+    ViewData["Title"] = "Add Shop Product";
 }
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="fw-bold text-primary">Shop Management</h1>
+        <p class="text-muted">Add new products and view the shop list</p>
+    </div>
 
-<div class="d-flex justify-content-center align-items-center vh-100 bg-light">
-    <div class="card shadow-lg border-0 rounded-4 w-100" style="max-width: 600px;">
-        <div class="card-header bg-primary text-white text-center rounded-top-4">
-            <h3 class="mb-0">Add Shop Item</h3>
-        </div>
-        <div class="card-body p-4">
-            <form asp-action="Save" method="post" novalidate>
 
-                <div class="mb-3">
-                    <label asp-for="Date" class="form-label fw-semibold">Date</label>
-                    <input asp-for="Date" type="date" class="form-control" />
-                    <span asp-validation-for="Date" class="text-danger small"></span>
-                </div>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
-                <div class="mb-3">
-                    <label asp-for="ItemName" class="form-label fw-semibold">Item Name</label>
-                    <input asp-for="ItemName" class="form-control" placeholder="Enter item name" />
-                    <span asp-validation-for="ItemName" class="text-danger small"></span>
-                </div>
+    <div class="d-flex justify-content-center align-items-center vh-100 bg-light">
+        <div class="card shadow-lg border-0 rounded-4 w-100" style="max-width: 1200px;">
+            <div class="card-header bg-primary text-white text-center rounded-top-4">
+                <h3 class="mb-0">Add Product</h3>
+            </div>
+            <div class="card-body p-4">
+                <form asp-action="Save" method="post" novalidate>
 
-                <div class="mb-3">
-                    <label asp-for="Price" class="form-label fw-semibold">Price</label>
-                    <input asp-for="Price" type="number" step="0.01" class="form-control" placeholder="Enter price" />
-                    <span asp-validation-for="Price" class="text-danger small"></span>
-                </div>
+                    <div class="mb-3">
+                        <label asp-for="Date" class="form-label fw-semibold">Date</label>
+                        <input asp-for="Date" type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control" placeholder="Enter Date" />
+                        <span asp-validation-for="Date" class="text-danger small"></span>
+                    </div>
 
-                <div class="mt-4 text-center d-flex justify-content-center gap-3 flex-wrap">
-                    <button type="submit" class="btn btn-success px-5 shadow-sm">
-                        <i class="bi bi-check-circle me-2"></i>Save
-                    </button>
+                    <div class="mb-3">
+                        <label asp-for="ProductName" class="form-label fw-semibold">Product Name</label>
+                        <input asp-for="ProductName" class="form-control" placeholder="Enter product name" />
+                        <span asp-validation-for="ProductName" class="text-danger small"></span>
+                    </div>
 
-                    <button type="button" class="btn btn-danger px-5 shadow-sm" onclick="window.history.back();">
-                        <i class="bi bi-x-circle me-2"></i>Close
-                    </button>
-                </div>
-            </form>
+                    <div class="mb-3">
+                        <label asp-for="Price" class="form-label fw-semibold">Price</label>
+                        <input asp-for="Price" type="number"   class="form-control" placeholder="Enter price" />
+                        <span asp-validation-for="Price" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mt-4 text-center d-flex justify-content-center gap-3 flex-wrap">
+                        <button type="submit" class="btn btn-success px-5 shadow-sm">
+                            <i class="bi bi-check-circle me-2"></i>Save
+                        </button>
+
+                        <button type="button" class="btn btn-danger px-5 shadow-sm" onclick="window.history.back();">
+                            <i class="bi bi-x-circle me-2"></i>Close
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
+ 
+    <!-- Modern Shop Grid with Search & Pagination -->
+    <div class="card shadow-lg border-0 rounded-4 mb-4">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 fw-bold">Product Details</h5>
+            <span class="badge bg-light text-primary fs-6">
+                @((ViewBag.ShopList != null) ? ((List<RoomMates.Models.DBModel.SathishShop>)ViewBag.ShopList).Count : 0) items
+            </span>
+        </div>
+
+        <div class="card-body">
+            <!-- Search -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <input type="text" id="shopSearch" class="form-control" placeholder="Search items...">
+                </div>
+            </div>
+
+            @if (ViewBag.ShopList != null && ((List<RoomMates.Models.DBModel.SathishShop>)ViewBag.ShopList).Any())
+            {
+                var shops = (List<RoomMates.Models.DBModel.SathishShop>)ViewBag.ShopList;
+                var props = typeof(RoomMates.Models.DBModel.SathishShop)
+                .GetProperties()
+                .Where(p => p.Name != "UserID")
+                .ToList();
+
+                <!-- Table with border only -->
+                <div class="table-responsive">
+                    <table id="shopTable" class="table table-bordered align-middle mb-0 text-center">
+                        <thead class="table-light">
+                            <tr>
+                                @foreach (var p in props)
+                                {
+                                    // Get DisplayName attribute if exists
+                                    var displayAttr = p.GetCustomAttributes(typeof(System.ComponentModel.DisplayNameAttribute), false)
+                                    .FirstOrDefault() as System.ComponentModel.DisplayNameAttribute;
+                                    var displayName = displayAttr != null ? displayAttr.DisplayName : p.Name;
+
+                                    <th class="form-text  small fw-semibold">@displayName</th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody id="shopBody">
+                            @foreach (var item in shops)
+                            {
+                                <tr>
+                                    @foreach (var p in props)
+                                    {
+                                        var value = p.GetValue(item);
+                                        if (value is DateTime dt)
+                                        {
+                                            <td>@dt.ToString("dd MMM yyyy")</td>
+                                        }
+                                        else if (value is decimal d)
+                                        {
+                                            <td>@d.ToString("0.00")</td>
+                                        }
+                                        else
+                                        {
+                                            <td>@(value ?? "-")</td>
+                                        }
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <nav class="mt-3">
+                    <ul class="pagination justify-content-center" id="pagination">
+                        <li class="page-item disabled"><a class="page-link" href="#" id="prevPage">Previous</a></li>
+                        <li class="page-item disabled"><a class="page-link" href="#" id="nextPage">Next</a></li>
+                    </ul>
+                </nav>
+            }
+            else
+            {
+                <div class="alert alert-warning text-center mb-0">
+                    No records found.
+                </div>
+            }
+        </div>
+    </div>
+    </div>
+
+    <script>
+        const rowsPerPage = 5; // Number of rows per page
+        const table = document.getElementById('shopTable');
+        const tbody = document.getElementById('shopBody');
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+        let currentPage = 1;
+
+        function showPage(page) {
+            const start = (page - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+            rows.forEach((row, i) => row.style.display = (i >= start && i < end) ? '' : 'none');
+
+            document.getElementById('prevPage').parentElement.classList.toggle('disabled', page === 1);
+            document.getElementById('nextPage').parentElement.classList.toggle('disabled', end >= rows.length);
+        }
+
+        document.getElementById('prevPage').addEventListener('click', e => {
+            e.preventDefault();
+            if (currentPage > 1) currentPage--;
+            showPage(currentPage);
+        });
+
+        document.getElementById('nextPage').addEventListener('click', e => {
+            e.preventDefault();
+            if (currentPage * rowsPerPage < rows.length) currentPage++;
+            showPage(currentPage);
+        });
+
+        document.getElementById('shopSearch').addEventListener('input', e => {
+            const filter = e.target.value.toLowerCase();
+            rows.forEach(row => {
+                row.style.display = Array.from(row.cells).some(cell => cell.textContent.toLowerCase().includes(filter)) ? '' : 'none';
+            });
+        });
+
+        // Initialize
+        showPage(currentPage);
+    </script>
+
+
 
 <!-- ✅ Success Modal -->
 <div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
@@ -67,15 +200,19 @@
 </div>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-@if (TempData["SuccessMessage"] != null)
-{
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            var modal = new bootstrap.Modal(document.getElementById('successModal'));
-            modal.show();
-        });
-    </script>
+ 
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                var modal = new bootstrap.Modal(document.getElementById('successModal'));
+                modal.show();
+            });
+        </script>
+    }
+
 }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - RoomMates</title>
+    <title>@ViewData["Title"] </title>
 
     <!-- Bootstrap & Icons -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -71,7 +71,7 @@
                          class="rounded-circle"
                          style="width:40px; height:40px; object-fit:cover;"
                          id="profileImage" />
-                    Room Mates
+                    Home Management
                 </a>
 
                 <!-- Hamburger for mobile -->
@@ -93,32 +93,45 @@
                     </ul> *@
 
                      <!-- Right Profile Hover Popup -->
+                    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item profile-popup">
-                            <a class="nav-link d-flex align-items-center" href="#">
+                        <li class="nav-item profile-popup d-flex align-items-center">
+                            @* Greeting Text *@
+                            @{
+                                var userName = HttpContextAccessor.HttpContext?.Session.GetString("Name") ?? "User";
+                                var hour = DateTime.Now.Hour;
+                                var greeting = hour < 12 ? "Good Morning" :
+                                hour < 18 ? "Good Afternoon" :
+                                "Good Evening";
+                            }
+                            <span class="me-2 fw-bold text-primary">@greeting <br />@userName </span>
+
+                            <a class="nav-link p-0" href="#">
                                 <img src="~/Images/user.png"
                                      alt="Profile"
                                      class="rounded-circle"
                                      style="width:40px; height:40px; object-fit:cover;"
                                      id="profileImage" />
                             </a>
-                            <!-- Profile Popup Menu -->
+
                             <div class="profile-popup-menu border rounded-3 shadow-sm p-2 bg-white">
+                                <hr class="my-1">
                                 <a href="/Account/Profile" class="dropdown-item py-2 px-3 d-flex align-items-center">
                                     <i class="bi bi-person me-2 text-primary"></i> View Profile
                                 </a>
-
                                 <hr class="my-1">
-
                                 <form action="/Login/Login" method="post" class="m-0">
                                     <button type="submit" class="dropdown-item py-2 px-3 d-flex align-items-center text-danger border-0 bg-transparent w-100 text-start">
                                         <i class="bi bi-box-arrow-right me-2"></i> Logout
                                     </button>
                                 </form>
                             </div>
-
                         </li>
+
                     </ul>
+
+
 
 
                 </div>

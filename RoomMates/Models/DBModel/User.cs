@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RoomMates.Models.DBModel
@@ -9,13 +10,13 @@ namespace RoomMates.Models.DBModel
         public int UserID { get; set; }
 
         [Required(ErrorMessage = "Username is required")]
-        public string UserName { get; set; }
+        public string UserName { get; set; } = "";
 
         [Required(ErrorMessage = "Password is required")]
-        public string Password { get; set; }
+        public string Password { get; set; } = "";
 
         [Required(ErrorMessage = "Full Name is required")]
-        public string Name { get; set; }
+        public string Name { get; set; } = "";
 
         [DataType(DataType.Date)]
         [Required(ErrorMessage = "Date of Birth is required")]
@@ -25,11 +26,11 @@ namespace RoomMates.Models.DBModel
 
         [Required(ErrorMessage = "Email is required")]
         [EmailAddress(ErrorMessage = "Invalid Email format")]
-        public string Email { get; set; }
+        public string Email { get; set; } = "";
 
         [Required(ErrorMessage = "Mobile number is required")]
         [StringLength(20)]
-        public string MobileNo { get; set; }
+        public string MobileNo { get; set; } = "";
 
         [DataType(DataType.Date)]
         [Required(ErrorMessage = "Date of Joining is required")]
@@ -37,6 +38,8 @@ namespace RoomMates.Models.DBModel
 
         [Required(ErrorMessage = "Room Advance is required")]
         [Range(0, 999999, ErrorMessage = "Invalid amount")]
+        [DisplayName("Room Advance")]
+
         public decimal RoomAdvance { get; set; }
     }
 }

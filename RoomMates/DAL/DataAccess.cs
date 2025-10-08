@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Data;
-using Microsoft.Data.SqlClient;
 
 
 
@@ -15,49 +16,22 @@ namespace RoomMates.DAL
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
-        public DataTable GetData(string spName, SqlParameter[] parameters)
+        public DataTable GetShopData(int userId)
         {
-            DataTable dt = new DataTable();
-
-            using (SqlConnection conn = new SqlConnection(_connectionString))
-            using (SqlCommand cmd = new SqlCommand(spName, conn))
+            DataTable dt = new();
+            using (var con = new SqlConnection(_connectionString))
             {
-                cmd.CommandType = CommandType.StoredProcedure;
-                if (parameters != null)
-                    cmd.Parameters.AddRange(parameters);
-
-                conn.Open();
-
-                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
-                {
-                    da.Fill(dt);
-                }
-            }
-
-            return dt;
-        }
-        public int Insert(string spName, SqlParameter[] parameters=null )
-        {
-            int rowsAffected = 0;
-            using (SqlConnection conn = new SqlConnection(_connectionString))
-            {
-                using (SqlCommand cmd = new SqlCommand(spName, conn))
+                using (var cmd = new SqlCommand("GetUserById", con))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    if (parameters != null) cmd.Parameters.AddRange(parameters);
-
-                    try
+                    cmd.Parameters.AddWithValue("@UserId", userId);
+                    using (var da = new SqlDataAdapter(cmd))
                     {
-                        conn.Open();
-                        rowsAffected = cmd.ExecuteNonQuery();
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new Exception("Error executing stored procedure: " + ex.Message);
+                        da.Fill(dt);
                     }
                 }
             }
-            return rowsAffected;
+            return dt;
         }
     }
 }

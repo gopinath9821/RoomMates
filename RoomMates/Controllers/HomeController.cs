@@ -15,6 +15,7 @@ namespace RoomMates.Controllers
 
         public IActionResult Index()
         {
+            
             return View();
         }
 
