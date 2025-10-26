@@ -1,10 +1,10 @@
 ﻿
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using RoomMates.DBContext;
 using RoomMates.Models.DBModel;
-using System.Threading.Tasks;
 
 namespace RoomMates.Controllers
 {
@@ -18,7 +18,7 @@ namespace RoomMates.Controllers
         }
 
         // GET
-     
+
         [HttpGet]
         public async Task<IActionResult> UserShop()
         {

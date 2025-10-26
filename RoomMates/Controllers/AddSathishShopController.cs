@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Data;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using RoomMates.DAL;
 using RoomMates.DAL;
 using RoomMates.DBContext;
 using RoomMates.Models.DBModel;
-using System.Data;
-using System.Threading.Tasks;
-using RoomMates.DAL;
-using Microsoft.EntityFrameworkCore;
+
 namespace RoomMates.Controllers
 {
     public class AddSathishShop : Controller
@@ -71,7 +72,7 @@ namespace RoomMates.Controllers
                 .FromSqlRaw("EXEC GetUserById @UserId", param)
                 .ToListAsync();
 
-           
+
 
             return View("SathishShop", updatedList); // <-- explicitly use "SathishShop" view
         }

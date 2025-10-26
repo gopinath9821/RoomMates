@@ -1,12 +1,12 @@
-﻿using RoomMates.Models.DBModel;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using RoomMates.Models.DBModel;
 
 namespace RoomMates.DBContext
 {
-    public class ConnetionDBContext:DbContext
+    public class ConnetionDBContext : DbContext
     {
 
-        public ConnetionDBContext(DbContextOptions options): base (options)
+        public ConnetionDBContext(DbContextOptions options) : base(options)
         {
 
         }
@@ -14,5 +14,5 @@ namespace RoomMates.DBContext
         public DbSet<SathishShop> SathishShop { get; set; }
         public DbSet<UserShop> OwnUserShop { get; set; }
         public DbSet<ShopBill> ShopBill { get; set; }
-    }
+     }
 }

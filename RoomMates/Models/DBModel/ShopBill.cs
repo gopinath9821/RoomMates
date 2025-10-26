@@ -25,7 +25,7 @@ namespace RoomMates.Models.DBModel
         [Required(ErrorMessage = "EB Bill is required")]
         [Range(0, double.MaxValue, ErrorMessage = "Enter a valid amount")]
         [Display(Name = "EB Bill")]
-        [DisplayName  ("EB Bill")]
+        [DisplayName("EB Bill")]
 
         public decimal EBBill { get; set; }
 

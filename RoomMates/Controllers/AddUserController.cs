@@ -1,14 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using RoomMates.DBContext;
 using RoomMates.Models.DBModel;
-using System;
 
 namespace RoomMates.Controllers
 {
     public class AddUserController : Controller
-    {  
+    {
         private readonly ConnetionDBContext _context;
 
         public AddUserController(ConnetionDBContext context)
@@ -42,12 +42,10 @@ namespace RoomMates.Controllers
         {
             if (ModelState.IsValid)
             {
-                int userID = HttpContext.Session?.GetInt32("UserID") ?? 1000;
-                string Name = HttpContext.Session?.GetString("Name") ?? "";
-                
+
+
                 var shop = new User
                 {
-                    UserID = userID,                  // assign the UserID
                     UserName = model.UserName,        // assign the username
                     Password = model.Password,        // assign the password
                     Name = model.Name,                // assign full name

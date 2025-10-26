@@ -8,7 +8,7 @@ namespace RoomMates.Controllers
 {
     public class AddBillController : Controller
     {
-        
+
         private readonly ConnetionDBContext _context;
 
         public AddBillController(ConnetionDBContext context)
@@ -45,8 +45,8 @@ namespace RoomMates.Controllers
                 string Name = HttpContext.Session?.GetString("Name") ?? "";
 
                 var shop = new ShopBill
-                {                 
-                    Date = model.Date,                                        
+                {
+                    Date = model.Date,
                     RoomRent = model.RoomRent,
                     EBBill = model.EBBill,
                     WaterBill = model.WaterBill,

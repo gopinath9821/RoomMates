@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RoomMates.DBContext;
 using RoomMates.Models;
 using RoomMates.Models.DBModel;
-using System.Threading.Tasks;
 
 namespace RoomMates.Controllers
 {

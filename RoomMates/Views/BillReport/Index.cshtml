@@ -1,0 +1,101 @@
+﻿@model RoomMates.Models.DBModel.BillReportViewModel
+
+@{
+    ViewData["Title"] = "Bill Report";
+}
+
+<div class="container py-5">
+    <h2 class="fw-bold text-primary mb-4">Bill Report</h2>
+    <!-- Filters: Month & Employee -->
+    <form method="get" class="row g-3 mb-4">
+        <!-- Month Filter -->
+        <div class="col-md-4">
+            <label class="form-label">Month</label>
+            <select name="month" class="form-select">
+                <option value="0" selected="@(Model.SelectedMonth == 0)">-- All Months --</option>
+                @foreach (var m in Model.Months ?? Enumerable.Empty<SelectListItem>())
+                {
+                    <option value="@m.Value" selected="@(Model.SelectedMonth?.ToString() == m.Value)">
+                        @m.Text
+                    </option>
+                }
+            </select>
+        </div>
+
+        <!-- Employee Filter -->
+        <div class="col-md-4">
+            <label class="form-label">Employee</label>
+            <select name="userId" class="form-select">
+                <option value="0" selected="@(Model.SelectedUserID == 0)">-- All Employees --</option>
+                @foreach (var u in Model.Users ?? Enumerable.Empty<SelectListItem>())
+                {
+                    <option value="@u.Value" selected="@(Model.SelectedUserID?.ToString() == u.Value)">
+                        @u.Text
+                    </option>
+                }
+            </select>
+        </div>
+
+        <!-- Buttons: Filter & Export PDF -->
+        <div class="col-md-4 d-flex align-items-end gap-2">
+            <button type="submit" class="btn btn-primary w-50">Search</button>
+
+            <a  
+               asp-route-month="@Model.SelectedMonth"
+               asp-route-userId="@Model.SelectedUserID"
+               class="btn btn-success w-50">
+                Export PDF
+            </a>
+        </div>
+    </form>
+
+
+    <!-- Table -->
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-body">
+            <table class="table table-bordered table-hover text-center align-middle">
+                <thead class="table-primary">
+                    <tr>
+                        <th>Month</th>
+                        <th>Name</th>
+                        <th>Pay Amount</th>
+                        <th>User Purchase Amount</th>
+                        <th>Pay Total Amount</th>
+                        <th>Advance Pending</th>
+                        <th>Total Amount Rent + Advance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Bills != null && Model.Bills.Any())
+                    {
+                        foreach (var b in Model.Bills)
+                        {
+                            <tr>
+                                <td>@b.Month</td>
+                                <td>@b.Name</td>
+                                <td>@b.PayAmount</td>
+                                <td>@b.UserPurchaseAmount</td>
+                                <td>@b.PayTotalAmount</td>
+                                <td>@b.AdvancePending</td>
+                                <td>@b.TotalAmountRentAdvance</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="7" class="text-muted">No data available</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br />
+    <div class="d-flex justify-content-center mb-4">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">
+            Back
+        </a>
+    </div>
+
+</div>

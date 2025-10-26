@@ -1,9 +1,9 @@
 ﻿using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
+using RoomMates.Models.DBModel;
 using System;
+using System.Collections.Generic;
 using System.Data;
-
-
+using static System.Net.Mime.MediaTypeNames;
 
 namespace RoomMates.DAL
 {
@@ -11,27 +11,81 @@ namespace RoomMates.DAL
     {
         private readonly string _connectionString;
 
-        public DataAccess(IConfiguration configuration)
+        public DataAccess(string connectionString)
         {
-            _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _connectionString = connectionString;
         }
 
-        public DataTable GetShopData(int userId)
+
+        public List<ViewBill> GetUserBills(int userId, int actionType,int? month)
         {
-            DataTable dt = new();
-            using (var con = new SqlConnection(_connectionString))
+            List<ViewBill> bills = new List<ViewBill>();
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
             {
-                using (var cmd = new SqlCommand("GetUserById", con))
+                using (SqlCommand cmd = new SqlCommand("GetAllDetails", con))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@UserId", userId);
-                    using (var da = new SqlDataAdapter(cmd))
+                    cmd.Parameters.AddWithValue("@ActionType", actionType);
+                    cmd.Parameters.AddWithValue("@Month", month);
+
+                    con.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        da.Fill(dt);
+                        while (reader.Read())
+                        {
+                            var bill = new ViewBill
+                            {
+                                Month = reader["MonthName"]?.ToString() ?? "",
+                                Name = reader["Name"]?.ToString() ?? "",
+                                PayAmount = reader["PayAmount"] != DBNull.Value ? Convert.ToDecimal(reader["PayAmount"]) : 0,
+                                UserPurchaseAmount = reader["UserPurchaseAmount"] != DBNull.Value ? Convert.ToDecimal(reader["UserPurchaseAmount"]) : 0,
+                                PayTotalAmount = reader["PayTotalAmount"] != DBNull.Value ? Convert.ToDecimal(reader["PayTotalAmount"]) : 0,
+                                AdvancePending = reader["AdvancePending"] != DBNull.Value ? Convert.ToDecimal(reader["AdvancePending"]) : 0,
+                                TotalAmountRentAdvance = reader["TotalAmountRentAdvance"] != DBNull.Value ? Convert.ToDecimal(reader["TotalAmountRentAdvance"]) : 0
+                            };
+                            bills.Add(bill);
+                        }
                     }
                 }
             }
-            return dt;
+
+            return bills;
         }
+        public List<User> GetUserID()
+        {
+            List<User> bills = new List<User>();
+
+            using (SqlConnection con = new SqlConnection(_connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("GetAllDetails", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@UserId", 0);
+                    cmd.Parameters.AddWithValue("@ActionType", 1);
+                    cmd.Parameters.AddWithValue("@Month", 0);
+
+                    con.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var bill = new User
+                            {
+                                UserID = reader["UserID"] != DBNull.Value ? Convert.ToInt32(reader["UserID"]) : 0,
+                                Name = reader["Name"]?.ToString() ?? ""
+                            };
+
+                            bills.Add(bill);
+
+                        }
+                    }
+                }
+            }
+
+            return bills;
+        }
+
     }
 }

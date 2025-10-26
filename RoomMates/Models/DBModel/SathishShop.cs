@@ -19,7 +19,7 @@ namespace RoomMates.Models.DBModel
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
         public string? Name { get; set; } = "";
-        [DisplayName("Product Name")] 
+        [DisplayName("Product Name")]
         [Required(ErrorMessage = "Product Name is required")]
         [StringLength(500)]
         public string ProductName { get; set; } = "";
@@ -28,6 +28,6 @@ namespace RoomMates.Models.DBModel
         [Range(0.01, double.MaxValue, ErrorMessage = "Enter valid price")]
         public decimal Price { get; set; }
     }
-     
-    
+
+
 }
