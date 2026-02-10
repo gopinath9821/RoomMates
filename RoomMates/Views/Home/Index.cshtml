@@ -85,7 +85,7 @@
         </div>
 
         <!-- ✅ Bill Report Card -->
-        <div id="BillRepot" class="col-12 col-sm-6 col-md-3">
+        <div id="BillReport" class="col-12 col-sm-6 col-md-3">
             <div class="card shadow-lg border-0 rounded-4 text-center h-100 card-hover">
                 <div class="card-body p-4 d-flex flex-column">
                     <div class="icon-circle bg-secondary mb-3">
@@ -128,15 +128,13 @@
 
     var Bill = document.getElementById('Bill');
     var User = document.getElementById('User');
-    var BillRepot = document.getElementById('BillRepot');
+    var BillReport = document.getElementById('BillReport');
  
     if (userID === 1000) {
         Bill.style.display = 'block';
         User.style.display = 'block';
-        BillRepot.style.display = 'block';
-    } else {
+     } else {
         User.style.display = 'none';
         Bill.style.display = 'none';
-        BillRepot.style.display = 'none';
-    }
+     }
 </script>

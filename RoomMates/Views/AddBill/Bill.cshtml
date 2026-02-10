@@ -40,9 +40,15 @@
 
                         <div class="mb-3">
                             <label asp-for="AkkaBill" class="form-label fw-semibold"></label>
-                            <input asp-for="AkkaBill" class="form-control" type="number" step="0.01" placeholder="Enter Akka Bill" />
+                            <input asp-for="AkkaBill" class="form-control" type="number" step="0.01" placeholder="Enter Cooking Bill" />
                             <span asp-validation-for="AkkaBill" class="text-danger"></span>
                         </div>
+
+                    <div class="mb-3">
+                        <label asp-for="GasBill" class="form-label fw-semibold"></label>
+                        <input asp-for="GasBill" class="form-control" type="number" step="0.01" placeholder="Enter Gas Bill" />
+                        <span asp-validation-for="GasBill" class="text-danger"></span>
+                    </div>
 
                         <div class="mb-3">
                             <label asp-for="WifiNetwork" class="form-label fw-semibold"></label>

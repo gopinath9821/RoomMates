@@ -1,11 +1,15 @@
 ﻿@model RoomMates.Models.DBModel.BillReportViewModel
 
 @{
-    ViewData["Title"] = "Bill Report";
+    ViewData["Title"] = "All Bill Report";
 }
 
 <div class="container py-5">
-    <h2 class="fw-bold text-primary mb-4">Bill Report</h2>
+    <div class="d-flex justify-content-center align-items-center mb-4">
+        <h1 class="fw-bold text-primary">All Bill Report</h1>
+    </div>
+    <br />
+
     <!-- Filters: Month & Employee -->
     <form method="get" class="row g-3 mb-4">
         <!-- Month Filter -->
@@ -21,6 +25,8 @@
                 }
             </select>
         </div>
+
+
 
         <!-- Employee Filter -->
         <div class="col-md-4">
@@ -48,7 +54,95 @@
             </a>
         </div>
     </form>
+    <br />
+    <h2 class="fw-bold text-primary mb-4">User Purchase List</h2>
+    <br />
 
+
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-body">
+            <table class="table table-bordered table-hover text-center align-middle">
+                <thead class="table-primary">
+                    <tr>
+                         <th>Name</th>
+                        <th>Product</th>
+                        <th>Amount</th>
+                       
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.UserBill != null && Model.UserBill.Any())
+                    {
+                        foreach (var b in Model.UserBill)
+                        {
+                            <tr>
+                                <td>@b.Name</td>
+                                <td>@b.ProductName</td>
+                                <td>@b.Price</td>                               
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="7" class="text-muted">No data available</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <br />
+    <h2 class="fw-bold text-primary mb-4">Total Bill Value</h2>
+    <br />
+    <div class="card shadow-lg border-0 rounded-4">
+        <div class="card-body">
+            <table class="table table-bordered table-hover text-center align-middle">
+                <thead class="table-primary">
+                    <tr>
+                        <th>Room Rent</th>
+                        <th>EB Bill</th>
+                        <th>Water Bill</th>
+                        <th>Cooking Bill</th>
+                        <th>Gas Bill</th>
+                        <th>Wifi Bill</th>
+                        <th>Sathish Shop Bill</th>
+                        <th>User Purchase Total Amount</th>
+                        <th>Total Amount</th>
+                     </tr>
+                </thead>
+                <tbody>
+                    @if (Model.TotalBill != null && Model.TotalBill.Any())
+                    {
+                        foreach (var b in Model.TotalBill)
+                        {
+                            <tr>
+                                <td>@b.RoomRent</td>
+                                <td>@b.EBBill</td>
+                                <td>@b.WaterBill</td>
+                                <td>@b.AkkaBill</td>
+                                <td>@b.GasBill</td>
+                                <td>@b.WifiNetwork</td>
+                                <td>@b.SathishShopBill</td>
+                                <td>@b.TotalUserAmount</td>
+                                <td>@b.TotalAmount</td>
+                             </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="7" class="text-muted">No data available</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br />
+    <h2 class="fw-bold text-primary mb-4">Per User Bill Values</h2>
+    <br />
 
     <!-- Table -->
     <div class="card shadow-lg border-0 rounded-4">

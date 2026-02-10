@@ -14,5 +14,7 @@ namespace RoomMates.Models.DBModel
 
         // Bill data
         public IEnumerable<ViewBill> Bills { get; set; } = new List<ViewBill>();
+        public IEnumerable<UserBill> UserBill { get; set; } = new List<UserBill>();
+        public IEnumerable<TotalBill> TotalBill { get; set; } = new List<TotalBill>();
     }
 }

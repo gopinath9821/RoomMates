@@ -7,6 +7,7 @@ using Rotativa.Options;
 using System;
 using System.Linq;
 using Rotativa.AspNetCore;
+using System.Data;
 
 namespace RoomMates.Controllers
 {
@@ -54,6 +55,19 @@ namespace RoomMates.Controllers
                 month ?? 0         // 0 = all months
             ) ?? new List<ViewBill>();
 
+            DataTable dt = _repo.GetUserBills_DT(userId ?? 0, 7,0);
+
+            model.TotalBill = _repo.GetUserBilldata(
+            userId ?? 0, 7,  // 0 = all users
+            month ?? 0         // 0 = all months
+        ) ?? new List<TotalBill>();
+
+
+
+            model.UserBill = _repo.GetUserBillsDetails(
+            userId ?? 0, 6,  // 0 = all users
+            month ?? 0         // 0 = all months
+        ) ?? new List<UserBill>();
             return View(model);
         }
 

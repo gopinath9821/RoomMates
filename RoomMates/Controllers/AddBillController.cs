@@ -51,7 +51,8 @@ namespace RoomMates.Controllers
                     EBBill = model.EBBill,
                     WaterBill = model.WaterBill,
                     AkkaBill = model.AkkaBill,
-                    WifiNetwork = model.WifiNetwork
+                    WifiNetwork = model.WifiNetwork,
+                    GasBill = model.GasBill
                 };
 
 

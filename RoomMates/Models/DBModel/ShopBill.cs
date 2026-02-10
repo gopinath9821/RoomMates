@@ -36,16 +36,25 @@ namespace RoomMates.Models.DBModel
 
         public decimal WaterBill { get; set; }
 
-        [Required(ErrorMessage = "Akka Bill is required")]
+        [Required(ErrorMessage = "Cooking Bill is required")]
         [Range(0, double.MaxValue, ErrorMessage = "Enter a valid amount")]
-        [Display(Name = "Akka Bill")]
-        [DisplayName("Akka Bill")]
+        [Display(Name = "Cooking Bill")]
+        [DisplayName("Cooking Bill")]
         public decimal AkkaBill { get; set; }
+
+        [Required(ErrorMessage = "Gas Bill is required")]
+        [Range(0, double.MaxValue, ErrorMessage = "Enter a valid amount")]
+        [Display(Name = "Gas Bill")]
+        [DisplayName("Gas Bill")]
+        public decimal GasBill { get; set; }
 
         [Required(ErrorMessage = "WiFi Bill is required")]
         [Range(0, double.MaxValue, ErrorMessage = "Enter a valid amount")]
         [Display(Name = "WiFi NetWork")]
         [DisplayName("WiFi NetWork")]
         public decimal WifiNetwork { get; set; }
+
+
+    
     }
 }
